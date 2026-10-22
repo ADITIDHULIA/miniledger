@@ -1,0 +1,26 @@
+{
+  "expo": {
+    "name": "MiniLedger",
+    "slug": "miniledger",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "scheme": "miniledger",
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.example.miniledger"
+    },
+    "android": {
+      "package": "com.example.miniledger"
+    },
+    "plugins": [
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "MiniLedger needs access to your photos so you can attach a receipt to a loan."
+        }
+      ],
+      "expo-font"
+    ]
+  }
+}

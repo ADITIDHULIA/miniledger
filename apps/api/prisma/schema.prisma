@@ -1,0 +1,49 @@
+generator client {
+  provider   = "prisma-client-js"
+  engineType = "client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  phone     String   @unique
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  loans     Loan[]
+}
+
+// Mock OTP storage. Only a hash of the code is stored, never the code itself.
+model OtpRequest {
+  id        String   @id @default(uuid())
+  phone     String
+  codeHash  String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  consumed  Boolean  @default(false)
+  createdAt DateTime @default(now())
+
+  @@index([phone, createdAt])
+}
+
+// Money is stored as integer paise (1 INR = 100 paise) to avoid float errors.
+model Loan {
+  id          String    @id @default(uuid())
+  userId      String
+  friendName  String
+  amountPaise Int
+  dueDate     DateTime
+  isRepaid    Boolean   @default(false)
+  repaidAt    DateTime?
+  notes       String?
+  receiptPath String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId, createdAt(sort: Desc)])
+  @@index([userId, isRepaid, dueDate])
+}

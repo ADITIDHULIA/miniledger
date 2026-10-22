@@ -1,0 +1,16 @@
+{
+  "name": "miniledger",
+  "private": true,
+  "scripts": {
+    "install:all": "npm install --prefix apps/api && npm install --prefix apps/mobile",
+    "db:up": "docker compose up -d",
+    "db:down": "docker compose down",
+    "db:migrate": "npm run prisma:deploy --prefix apps/api",
+    "db:seed": "npm run seed --prefix apps/api",
+    "api:dev": "npm run dev --prefix apps/api",
+    "mobile:start": "npm run start --prefix apps/mobile",
+    "test": "npm test --prefix apps/api && npm test --prefix apps/mobile",
+    "lint": "npm run lint --prefix apps/api && npm run lint --prefix apps/mobile",
+    "typecheck": "npm run typecheck --prefix apps/api && npm run typecheck --prefix apps/mobile"
+  }
+}
